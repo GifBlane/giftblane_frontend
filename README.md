@@ -1,18 +1,32 @@
-## COMO INSTALLAR DOCKER
+## INSTALLAR DOCKER
 
-TBA
+https://docs.docker.com/engine/install/ubuntu/ ```Ubuntu```
+
+https://docs.docker.com/desktop/install/windows-install/  ```Windows```
+
+https://docs.docker.com/desktop/install/mac-install/ ```Mac```
+
+---
 
 ## HOW TO SET UP DOCKER ENV
 
+
+STEP 1 : Clone giftblane_frontend repo
+
+STEP 2 : Open the repo with Visual Studio Code and write on terminal: 
 ```
-STEP 1
+docker build -t giftcarduser:v1 .
+```
+Then:
+```
+docker run --rm -it -p 8080:3000 --name gifcard giftcarduser:v1
+```
 
-STEP 2
 
-STEP 3
+Done.
 
 STEP 4
-```
+
 
 
 ## HOW TO ...
