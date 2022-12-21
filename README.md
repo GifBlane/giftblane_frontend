@@ -14,15 +14,15 @@ To set up the project, follow these steps:
 1.Clone the repository:
 #### Copy code
 ```
-git clone https://github.com/[username]/giftcard.git
+git clone https://github.com/GifBlane/giftblane_frontend.git
 ```
 2. Navigate to the project directory:
 
 #### Copy code
 ```
-cd giftcard
+cd giftblane_frontend
 ```
-2. Install the dependencies:
+3. Install the dependencies:
 #### Copy code
 
 ```
@@ -39,8 +39,10 @@ The application will be running at http://localhost:3000.
 To deploy the application, run the following command:
 
 ## Copy code
+```
 pnpm run build
 pnpm run start
+```
 This will build the application and start the production server.
 
 ## Customization
@@ -49,10 +51,8 @@ To customize the design of the application, you can edit the tailwind.config.js 
 ## Contributing
 To contribute to the project, follow these steps:
 
-Fork the repository.
-Create a new branch for your feature.
-Make your changes and commit them.
-Push the branch to your fork.
-Submit a pull request.
-License
-This project is licensed under the MIT License.
+1.Fork the repository.
+2.Create a new branch for your feature.
+3.Make your changes and commit them.
+4.Push the branch to your fork.
+5.Submit a pull request.
