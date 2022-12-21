@@ -1,27 +1,8 @@
-const path = require("path");
-
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/login",
-        permanent: true,
-      },
-    ];
-  },
-};
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
-  sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
-  },
-  images: {
-    domains: ["img.pokemondb.net"],
-  },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
