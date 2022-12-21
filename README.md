@@ -51,8 +51,8 @@ To customize the design of the application, you can edit the tailwind.config.js 
 ## Contributing
 To contribute to the project, follow these steps:
 
-1.Fork the repository.
-2.Create a new branch for your feature.
-3.Make your changes and commit them.
-4.Push the branch to your fork.
-5.Submit a pull request.
+1. Fork the repository.
+2. Create a new branch for your feature.
+3. Make your changes and commit them.
+4. Push the branch to your fork.
+5. Submit a pull request.
