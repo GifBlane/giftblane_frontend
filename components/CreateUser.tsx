@@ -33,24 +33,36 @@ export const CreateUser = () => {
           placeholder="Confirmar Contraseña"
           className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
         />
+        <span className="mb-6 h-1 w-full bg-[#515151] lg:w-1/2"></span>
         <div className="px-12 text-center font-mulish text-sm">
           <p className="mb-4">
             Es posible que los usuarios de nuestro servicio hayan subido tu
             información de contacto en Instagram.{" "}
-            <a href="#" className="text-[#2987f2]">Mas Información</a>
+            <a href="#" className="text-[#2987f2]">
+              Mas Información
+            </a>
           </p>
           <p>
             Al registrarte, aceptas nuestras Condiciones, nuestra
-            <a href="#" className="text-[#2987f2]"> Política de Privacidad</a> y nuestra{" "}
-            <a href="#" className="text-[#2987f2]"> Política de Cookies.</a>
+            <a href="#" className="text-[#2987f2]">
+              {" "}
+              Política de Privacidad
+            </a>{" "}
+            y nuestra{" "}
+            <a href="#" className="text-[#2987f2]">
+              {" "}
+              Política de Cookies.
+            </a>
           </p>
         </div>
         <input
           type="submit"
           value="Siguiente"
-		  className="font-mulish mt-5 cursor-pointer bg-gradient-to-r from-[#DD527C] to-[#EE634C] px-16 py-2 text-[#FFFFFF] rounded-[7px]"
+          className="font-mulish mt-5 cursor-pointer bg-[#91BA4D] px-16 py-2 text-[#FFFFFF] rounded-[7px]"
         />
       </form>
     </div>
   );
 };
+
+/* bg-gradient-to-r from-[#DD527C] to-[#EE634C] */
