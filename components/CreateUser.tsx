@@ -13,7 +13,7 @@ export const CreateUser = () => {
       </div>
       <form
         action=""
-        className="bg-[#FFFFFF]/90 flex flex-col items-center mx-[37%] rounded-[20px] py-12 mb-10"
+        className="bg-[#FFFFFF]/90 flex flex-col items-center mx-[37%] rounded-[20px] pt-12 pb-7 mb-10"
       >
         <input
           type="text"
@@ -33,16 +33,19 @@ export const CreateUser = () => {
           placeholder="Confirmar Contraseña"
           className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
         />
-        <span className="mb-6 h-1 w-full bg-[#515151] lg:w-1/2"></span>
+        {/* <p className="text-[#DF5478] mb-5 font-mulish text-sm mx-[10%] text-center">
+          Los datos que has introducido no son correctos.
+        </p> */}
+        <span className="mb-6 h-[2px] w-full bg-[#0000004D] lg:w-[75%]"></span>
         <div className="px-12 text-center font-mulish text-sm">
-          <p className="mb-4">
+          <p className="mb-4 text-[#0000008D]">
             Es posible que los usuarios de nuestro servicio hayan subido tu
             información de contacto en Instagram.{" "}
             <a href="#" className="text-[#2987f2]">
               Mas Información
             </a>
           </p>
-          <p>
+          <p className="text-[#0000008D]">
             Al registrarte, aceptas nuestras Condiciones, nuestra
             <a href="#" className="text-[#2987f2]">
               {" "}
@@ -58,7 +61,7 @@ export const CreateUser = () => {
         <input
           type="submit"
           value="Siguiente"
-          className="font-mulish mt-5 cursor-pointer bg-[#91BA4D] px-16 py-2 text-[#FFFFFF] rounded-[7px]"
+          className="font-mulish mt-5 cursor-pointer bg-[#91BA4D] px-16 py-2 text-[#FFFFFF] rounded-[7px] m-0"
         />
       </form>
     </div>
