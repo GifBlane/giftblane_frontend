@@ -1,29 +1,21 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Portfolio CI
+name: Testing CI
 
 on:
   push:
-    branches: ["Development","production","testing","staging"]
+    branches: ["testing"]
   pull_request:
-    branches: ["Development","production","testing","staging"]
+    branches: ["testing"]
 
 jobs:
   build:
     runs-on: self-hosted
-  steps:
-  - name: Set environment variable
-    run: echo "API_KEY=${{ secrets.staging }}" >> $GITHUB_ENV
-  - name: Use environment variable
-    run: |
-          echo "The API key is: $API_KEY"
-          # Output: The API key is: abcdef123456
-
+    
     strategy:
       matrix:
         node-version: [18.x]
-
 
     steps:
       - uses: actions/checkout@v3
