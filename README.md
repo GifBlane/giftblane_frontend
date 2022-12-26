@@ -40,8 +40,8 @@ To deploy the application, run the following command:
 
 ## Copy code
 ```
-pnpm run build
-pnpm run start
+npm run build
+npm run start
 ```
 This will build the application and start the production server.
 
