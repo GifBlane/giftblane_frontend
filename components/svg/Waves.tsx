@@ -4,7 +4,7 @@ interface Props {
   className?: string;
 }
 
-export const Waves: React.FC<Props> = ({className}) => {
+export const Waves: React.FC<Props> = ({ className }) => {
   return (
     <svg
       width="1440"

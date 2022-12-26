@@ -43,9 +43,6 @@ const Login: NextPage = () => {
       // Establecer el mensaje de error apropiado según el estado del error
       let errorMessage = "";
       switch (status) {
-        case 200:
-          // errorMessage = "Login successful";
-          break;
         case 400:
           errorMessage = "You have entered an invalid password";
           break;
@@ -69,8 +66,8 @@ const Login: NextPage = () => {
       setError(errorMessage);
       // Resetear el formulario de inicio de sesión
       // Deshabilitado durante desarrollo
-      // setUsername("");
-      // setPassword("");
+      setUsername("");
+      setPassword("");
     }
   };
 
@@ -97,16 +94,32 @@ const Login: NextPage = () => {
             <p className="text-lg">Inicia Sesión de la forma más rápida</p>
           </div>
 
-          <form className="flex flex-col gap-2 min-h-[340px] max-w-[388px] justify-between items-center bg-[#ffffff]/80 shadow-sm rounded-[20px] py-10 px-12 ">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSubmit(event);
+            }}
+            className="flex flex-col gap-2 min-h-[340px] max-w-[388px] justify-between items-center bg-[#ffffff]/80 shadow-sm rounded-[20px] py-10 px-12 "
+          >
             <input
               className="w-full py-2 px-5 rounded-[7px] placeholder:text-[#515151] text-black "
-              type="email"
-              placeholder="Gmail"
+              name="Gmail"
+              value={email}
+              required
+              disabled={submitting}
+              placeholder=""
+              onChange={(e) => setUsername(e.target.value)}
             />
             <input
               className="w-full py-2 px-5 rounded-[7px] placeholder:text-[#515151] text-black "
               type="password"
-              placeholder="Contraseña"
+              name="password"
+              value={password}
+              required
+              disabled={submitting}
+              placeholder=""
+              aria-label="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             {/* Check box "Recordar Inicio de sesion" */}
             <div>
@@ -120,8 +133,9 @@ const Login: NextPage = () => {
               error && <p className="text-red-500">{error}</p>
             }
             <button
-              type="submit"
               className="bg-gradient-to-b w-full from-[#DD527C] to-[#EE634C] disabled:opacity-50 rounded-[7px] text-white py-2 px-4"
+              type="submit"
+              disabled={submitting || !email || !password}
             >
               Iniciar Sesión
             </button>
