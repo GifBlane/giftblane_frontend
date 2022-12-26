@@ -26,12 +26,12 @@ cd giftblane_frontend
 #### Copy code
 
 ```
-pnpm install
+npm install
 ```
 3. Start the development server:
 #### Copy code
 ```
-pnpm run dev
+npm run dev
 ```
 The application will be running at http://localhost:3000.
 
