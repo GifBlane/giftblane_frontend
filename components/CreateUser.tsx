@@ -3,20 +3,20 @@ import { Waves } from "./svg/Waves";
 
 export const CreateUser = () => {
   return (
-    <>
-      <Waves className="w-full h-full z-[0] absolute" />
-      <div className="z-[1] relative">
+    <div className="w-screen h-screen">
+      <Waves className="w-full h-full z-[1] absolute" />
+      <div className="z-[2] absolute">
         <div className="text-center">
-          <h1 className="font-bold font-mulish text-xl mt-8 mb-5 ">
+          <h1 className="font-bold font-mulish text-2xl mt-8 mb-5">
             Nombre Pagina - Datos Personales
           </h1>
-          <p className="mb-7 font-mulish">
+          <p className="mb-7 font-mulish text-lg">
             Crea tu usuario Nemo para disfrutar los beneficios de una Gift Card.
           </p>
         </div>
         <form
           action=""
-          className="bg-[#FFFFFF]/90 flex flex-col items-center mx-[37%] rounded-[20px] pt-12 pb-7 mb-10"
+          className="bg-[#FFFFFF]/90 flex flex-col items-center mx-[775px] rounded-[20px] pt-12 pb-7"
         >
           <input
             type="text"
@@ -68,7 +68,9 @@ export const CreateUser = () => {
           />
         </form>
       </div>
-    </>
+      <span className="w-full h-3/6 z-[0] relative bg-gradient-to-r from-[#F5CCB1] to-[#F3B191] block"></span>
+      <span className="w-full h-3/6 z-[0] relative bg-[#F5F5F5] block"></span>
+    </div>
   );
 };
 
