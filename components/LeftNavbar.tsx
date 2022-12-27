@@ -1,73 +1,77 @@
-import React from "react";
-import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import routes from "./routes";
+import { useState } from "react";
+import cn from "classnames";
+import { MenuItem } from "../layout/menu";
 
-interface State {
-  selectedOption: string;
-}
-interface IProps {
-  onOptionClick: (option: string) => void;
-}
+const LeftNavbar = ({ menu }: { menu: MenuItem[] }) => {
+  // Initialize the state for the dropdown menus
+  const [openMenus, setOpenMenus] = useState<string[]>([]);
 
-class LeftNavbar extends React.Component<IProps, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      selectedOption: "home",
-    };
-  }
+  // Toggle the dropdown menu when the menu item is clicked
+  const toggleMenu = (label: string) => {
+    if (openMenus.includes(label)) {
+      setOpenMenus(openMenus.filter((l) => l !== label));
+    } else {
+      setOpenMenus([...openMenus, label]);
+    }
+  };
 
-  handleOptionClick(option: string) {
-    this.setState({ selectedOption: option });
-  }
-
-  render() {
-    return (
-      <div className={styles.navcontainer}>
-        <div className={styles.logo}>
-          <h2>Giftblane</h2>
-          <div className={styles.profile}>
-            <div className={styles.headcontainer}>
-              <div className={styles.headwrapper}>
-                <div className={styles.title}>
-                  <h2>
-                    Hello, <span>Jenny</span>
-                  </h2>
-                  <p>welcome to the board.</p>
-                </div>
-                <div className={styles.profile}>
-                  {/* <img alt="profile" className={styles.image} /> */}
+  return (
+    <nav className="bg-gray-800 h-screen w-64">
+      <div className="py-6 px-4 flex items-center mx-auto">
+        <img
+          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
+          alt="User"
+          className="h-12 w-12 rounded-full mx-auto"
+        />
+        <p className="text-white font-bold ml-4">John Doe</p>
+      </div>
+      {menu.map((item) => (
+        <div key={item.label} className="relative">
+          {item.submenu ? (
+            <>
+              <a
+                onClick={() => toggleMenu(item.label)}
+                className="flex items-center px-3 py-2 text-sm font-medium leading-5 text-gray-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700
+                  focus:outline-none focus:text-white focus:bg-gray-700"
+              >
+                {item.label}
+              </a>
+              <div
+                className={cn(
+                  "origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg",
+                  { hidden: !openMenus.includes(item.label) }
+                )}
+              >
+                <div className="py-1 rounded-md bg-white shadow-xs">
+                  {item.submenu.map((subitem) => (
+                    <Link
+                      key={subitem.label}
+                      href={subitem.href}
+                      legacyBehavior
+                    >
+                      <a className="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100">
+                        {subitem.label}
+                      </a>
+                    </Link>
+                  ))}
                 </div>
               </div>
-            </div>
-          </div>
+            </>
+          ) : (
+            <Link href={item.href} legacyBehavior>
+              <a
+                className="flex items-center px-3 py-2 text-sm font-medium leading-5 text-gray-300 transition duration-150 ease-in-out rounded-md hover:text-white hover:bg-gray-700
+                        focus:outline-none focus:text-white focus:bg-gray-700"
+              >
+                {item.label}
+              </a>
+            </Link>
+          )}
         </div>
-        <div className={styles.wrapper}>
-          <nav className={styles.navbar}>
-            <ul className={styles.navbarOptiones}>
-              <li>
-                {routes.map((route) => (
-                  <Link key={route.path} href={route.path}>
-                    <span
-                      className={
-                        this.state.selectedOption === route.label
-                          ? "selected"
-                          : ""
-                      }
-                      onClick={() => this.handleOptionClick(route.label)}
-                    >
-                      {route.label}
-                    </span>
-                  </Link>
-                ))}
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    );
-  }
-}
+      ))}
+    </nav>
+  );
+};
 
 export default LeftNavbar;
