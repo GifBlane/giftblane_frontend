@@ -7,9 +7,15 @@ import { menu } from "../layout/menu";
 const TablePage: NextPage = () => {
   return (
     <Layout title="Table Page" menu={menu}>
-      <div>
+      <div className="  ">
         <h1>Listado de usuarios</h1>
-        <div style={{ width: "900px", display: "grid", margin: "2em auto" }}>
+        <div
+          style={{
+            width: "900px",
+            display: "grid",
+            margin: "10em auto",
+          }}
+        >
           <table className="table-auto min-w-full">
             <thead className="bg-[#F0F0F0] text-[#818181] font-normal">
               <tr className="text-sm">

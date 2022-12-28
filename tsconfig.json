@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "diagnostics": true,
+    "extendedDiagnostics": true,
+    "pretty": true,
+    "traceResolution": true,
     "target": "es5",
     "lib": [
       "dom",
