@@ -6,7 +6,7 @@ Before getting started, make sure you have the following tools installed:
 
 * [Node.js](https://nodejs.org/en/)
 
-* [NPM](https://pnpm.js.org)
+* [NPM](https://www.npmjs.com)
 
 ## Installation
 To set up the project, follow these steps:
