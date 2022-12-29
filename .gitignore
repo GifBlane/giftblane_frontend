@@ -38,13 +38,7 @@ next-env.d.ts
 # local env files
 .env.development
 .env.production
-.env.staging
-.env.testing
+
 
 .vscode
 pnpm-lock.yaml
-package-lock.json
-
-#Testings
-
-/tests
