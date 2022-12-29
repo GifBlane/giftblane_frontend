@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  with-docker-multi-env-development:
+    build:
+      context: ../../
+      dockerfile: docker/testing/Dockerfile
+    image: with-docker-multi-env-testing
+    ports:
+      - '3005:3000'
