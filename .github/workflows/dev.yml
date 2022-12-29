@@ -18,19 +18,27 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - run: npm CI
-      - run: npm build
-      - uses: actions/ssh-remote@v1
+
+      - name: Install dependencies and run tests
+        run: npm CI
+
+      - name: Build the project
+        run: npm build
+
+      - name: Deploy to remote server
+        uses: actions/ssh-remote@v1
         with:
           host: ${{ secrets.HOSTNAME }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           private-key: ${{ secrets.PRIVATE_KEY }}
-        run: |
-          rsync -azv --exclude '.git' . ${{ secrets.USERNAME }}@${HOSTNAME}:${DESTINATION_PATH}
+          run: |
+            rsync -azv --exclude '.git' . ${{ secrets.USERNAME }}@${HOSTNAME}:${DESTINATION_PATH}
