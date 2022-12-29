@@ -68,8 +68,8 @@ export const CreateUser = () => {
           />
         </form>
       </div>
-      <span className="w-full h-3/6 z-[0] relative bg-gradient-to-r from-[#F5CCB1] to-[#F3B191] block"></span>
-      <span className="w-full h-3/6 z-[0] relative bg-[#F5F5F5] block"></span>
+      <span className="w-full h-[52%] z-[0] relative bg-gradient-to-r from-[#F5CCB1] to-[#F3B191] block"></span>
+      <span className="w-full h-[48%] z-[0] relative bg-[#F5F5F5] block"></span>
     </div>
   );
 };
