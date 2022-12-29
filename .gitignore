@@ -43,7 +43,6 @@ next-env.d.ts
 
 .vscode
 pnpm-lock.yaml
-package-lock.json
 
 #Testings
 
