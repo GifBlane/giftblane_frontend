@@ -87,8 +87,8 @@ const Login: NextPage = () => {
         }}
       >
         {/* TODO: SVG no se estira 100% */}
-        <Waves className="absolute w-screen z-[0]" />
-        <div className="flex flex-col gap-14 items-center z-[1]">
+        <Waves className="absolute z-[0] w-full h-full pb-40" />
+        <div className="flex flex-col gap-14 items-center z-[1] pt-24">
           <div className="text-center">
             <h1 className="font-bold text-lg">Iniciar Sesión</h1>
             <p className="text-lg">Inicia Sesión de la forma más rápida</p>

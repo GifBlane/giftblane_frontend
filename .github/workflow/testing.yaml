@@ -26,3 +26,11 @@ jobs:
           cache: "npm"
       - run: npm CI
       - run: npm build
+      - uses: actions/ssh-remote@v1
+        with:
+          host: ${{ secrets.HOSTNAMETEST }}
+          port: ${{ secrets.PORTTEST }}
+          username: ${{ secrets.USERNAMETEST }}
+          private-key: ${{ secrets.PRIVATE_KEYTEST }}
+        run: |
+          rsync -azv --exclude '.git' . ${{ secrets.USERNAMETEST }}@${HOSTNAMETEST}:${DESTINATION_PATHTEST}
