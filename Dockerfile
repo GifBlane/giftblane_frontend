@@ -10,8 +10,6 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-COPY public ./public
-COPY package.json next.config.js jsconfig.json ./
 RUN npm run build
 
 # Stage 3: run
