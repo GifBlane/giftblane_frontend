@@ -5,9 +5,9 @@ name: Development CI
 
 on:
   push:
-    branches: ["Development"]
+    branches: [""]
   pull_request:
-    branches: ["Development"]
+    branches: [""]
 
 jobs:
   build:
