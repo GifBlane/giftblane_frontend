@@ -1,13 +1,77 @@
 import React, { useState } from "react";
+import { useCustomForm } from "../hooks";
+
+interface FormData {
+  name: string,
+
+}
 
 export const CreateUser = () => {
-  const [name, setName] = useState("");
+  const [values, handleChange] = useCustomForm<FormData>({
+    name: "",
+    /* lastName: "",
+    email: "",
+    idType: "",
+    identificationNumber: "",
+    type: "",
+    role: "", */
+  }); 
+  const {name} = values
+  /* const [name, setName] = useState(""); */
+  const [errorName, setErrorName] = useState(false);
+  const [errorLastName, setErrorLastName] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [erroridType, setErrorIdType] = useState(false);
+  const [errorIdNumber, setErrorIdNumber] = useState(false);
+  const [errorType, setErrorType] = useState(false);
+  const [errorRole, setErrorRole] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
   const [page, setPage] = useState(1);
 
-  const handleSubmit = (e) => {
+  const isValidEmail = (email: string) => {
+    return /\S+@\S+.\S+/.test(email);
+  };
+
+  const validateName = (name: string) => {
+    if (!name) {
+      setErrorName(true);
+      if (errorMessages.indexOf("El nombre no puede estar vacío") === -1) {
+        errorMessages.push("El nombre no puede estar vacío");
+      }
+    }
+  };
+
+  const validateLastName = (lastName: string) => {
+    if (!lastName) {
+      setErrorLastName(true);
+      if (errorMessages.indexOf("El apellido no puede estar vacío") === -1) {
+        errorMessages.push("El apellido no puede estar vacío");
+      }
+    }
+  };
+
+  const validateEmail = (email: string) => {
+    if (!email) {
+      setErrorEmail(true);
+      if (errorMessages.indexOf("El email no puede estar vacío") === -1) {
+        errorMessages.push("El email no puede estar vacío");
+      }
+    }
+
+    if (!isValidEmail(email)) {
+      setErrorEmail(true);
+      if (errorMessages.indexOf("El email es inválido") === -1) {
+        errorMessages.push("El email es inválido");
+      }
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(e);
   };
+
+  console.log(errorMessages);
 
   return (
     <>
@@ -22,20 +86,18 @@ export const CreateUser = () => {
             Crea tu usuario Nemo para disfrutar los beneficios de una Gift Card.
           </p>
         </div>
+
         <form
           onSubmit={handleSubmit}
           className="bg-[#FFFFFF]/90 flex flex-col items-center w-[400px] rounded-[20px] pt-12 pb-7"
         >
-          <div
-            className={
-              page === 1 ? "inline-block text-center" : "hidden text-center"
-            }
-          >
+          <div className={page === 1 ? "flex flex-col items-center" : "hidden"}>
             <input
               type="text"
               name="name"
-              value={name}
-              onChange={(e) => e.target.value}
+              value={values.name}
+              /* onChange={(e) => handleChange(e)} */
+              onBlur={(e) => validateName(e.target.value)}
               placeholder="Nombre"
               className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
             />
@@ -43,30 +105,28 @@ export const CreateUser = () => {
               type="text"
               name="lastName"
               onChange={(e) => e.target.value}
+              onBlur={(e) => validateLastName(e.target.value)}
               placeholder="Apellido"
               className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
             />
             <input
               type="email"
               name="email"
+              onBlur={(e) => validateEmail(e.target.value)}
               placeholder="Email"
               className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
             />
           </div>
-          <div
-            className={
-              page === 2 ? "text-center flex flex-col" : "hidden text-center"
-            }
-          >
+          <div className={page === 2 ? "flex flex-col items-center" : "hidden"}>
             <select
               name=""
               id=""
               className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8"
             >
-              <option value="" disabled selected>
+              <option value="tipoIdentificacion" disabled selected>
                 Tipo de identificación
               </option>
-              <option value="">DNI</option>
+              <option value="DNI">DNI</option>
             </select>
             <input
               type="number"
@@ -78,7 +138,7 @@ export const CreateUser = () => {
             <select
               name=""
               id=""
-              className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8"
+              className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8 w-[100%]"
             >
               <option value="" disabled selected>
                 Tipo
@@ -93,9 +153,11 @@ export const CreateUser = () => {
               className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
             />
           </div>
-          {/* <p className="text-[#DF5478] mb-5 font-mulish text-sm mx-[10%] text-center">
-            {error.forEach((e) => )}
-          </p> */}
+          <>
+            {errorMessages.map((m, i) => (
+              <p key={i} className="text-[#DF5478] mb-4 font-mulish text-sm mx-[10%] text-center">{m}</p>
+            ))}
+          </>
           <span className="mb-6 h-[2px] w-full bg-[#0000004D] lg:w-[75%]"></span>
           <div className="px-12 text-center font-mulish text-sm">
             <p className="mb-4 text-[#0000008D]">
@@ -119,8 +181,9 @@ export const CreateUser = () => {
             </p>
           </div>
           <button
+            disabled={!name || errorName || errorLastName || errorEmail}
             type="submit"
-            className="font-mulish mt-5 cursor-pointer bg-[#91BA4D] px-16 py-2 text-[#FFFFFF] rounded-[7px] m-0"
+            className={"font-mulish mt-5 px-16 py-2 rounded-[7px] m-0  cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed"}
             onClick={() => setPage(2)}
           >
             {page === 2 ? "Crear" : "Siguiente"}
@@ -134,3 +197,6 @@ export const CreateUser = () => {
 };
 
 /* bg-gradient-to-r from-[#DD527C] to-[#EE634C] */
+/* !errorName && !errorLastName && !errorEmail
+                ? "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0  cursor-pointer bg-[#91BA4D] text-[#FFFFFF]"
+                : "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0 bg-[#D9D9D9] text-[#FFFFFF]" */
