@@ -1,77 +1,19 @@
 import React, { useState } from "react";
-import { useCustomForm } from "../hooks";
-
-interface FormData {
-  name: string,
-
-}
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
 
 export const CreateUser = () => {
-  const [values, handleChange] = useCustomForm<FormData>({
-    name: "",
-    /* lastName: "",
-    email: "",
-    idType: "",
-    identificationNumber: "",
-    type: "",
-    role: "", */
-  }); 
-  const {name} = values
-  /* const [name, setName] = useState(""); */
-  const [errorName, setErrorName] = useState(false);
-  const [errorLastName, setErrorLastName] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [erroridType, setErrorIdType] = useState(false);
-  const [errorIdNumber, setErrorIdNumber] = useState(false);
-  const [errorType, setErrorType] = useState(false);
-  const [errorRole, setErrorRole] = useState(false);
-  const [errorMessages, setErrorMessages] = useState([]);
   const [page, setPage] = useState(1);
 
-  const isValidEmail = (email: string) => {
-    return /\S+@\S+.\S+/.test(email);
-  };
+  let regex = new RegExp("^[A-Z][0-9]{8}$");
 
-  const validateName = (name: string) => {
-    if (!name) {
-      setErrorName(true);
-      if (errorMessages.indexOf("El nombre no puede estar vacío") === -1) {
-        errorMessages.push("El nombre no puede estar vacío");
-      }
-    }
-  };
-
-  const validateLastName = (lastName: string) => {
-    if (!lastName) {
-      setErrorLastName(true);
-      if (errorMessages.indexOf("El apellido no puede estar vacío") === -1) {
-        errorMessages.push("El apellido no puede estar vacío");
-      }
-    }
-  };
-
-  const validateEmail = (email: string) => {
-    if (!email) {
-      setErrorEmail(true);
-      if (errorMessages.indexOf("El email no puede estar vacío") === -1) {
-        errorMessages.push("El email no puede estar vacío");
-      }
-    }
-
-    if (!isValidEmail(email)) {
-      setErrorEmail(true);
-      if (errorMessages.indexOf("El email es inválido") === -1) {
-        errorMessages.push("El email es inválido");
-      }
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(e);
-  };
-
-  console.log(errorMessages);
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("El nombre es obligatorio").min(1),
+    lastName: Yup.string().required("El apellido es obligatorio"),
+    email: Yup.string()
+      .email("No es un email válido")
+      .required("El email es obligatorio"),
+  });
 
   return (
     <>
@@ -86,8 +28,146 @@ export const CreateUser = () => {
             Crea tu usuario Nemo para disfrutar los beneficios de una Gift Card.
           </p>
         </div>
+        <Formik
+          initialValues={{
+            name: "",
+            lastName: "",
+            email: "",
+            idType: "",
+            idNumber: "",
+            type: "",
+            role: "",
+          }}
+          onSubmit={(values) => {
+            console.log(values);
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ errors, touched, isValid, dirty }) => (
+            <Form className="bg-[#FFFFFF]/90 flex flex-col items-center w-[400px] rounded-[20px] pt-12 pb-7">
+              <div
+                className={page === 1 ? "flex flex-col items-center" : "hidden"}
+              >
+                <Field
+                  type="text"
+                  name="name"
+                  placeholder="Nombre"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="text"
+                  name="lastName"
+                  placeholder="Apellido"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+              </div>
+              <div
+                className={page === 2 ? "flex flex-col items-center" : "hidden"}
+              >
+                <Field
+                  as="select"
+                  className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8"
+                >
+                  <option selected disabled>
+                    Tipo de identificación
+                  </option>
+                  <option value="DNI">DNI</option>
+                  <option value="Cédula">Cédula</option>
+                  <option value="Pasaporte">Pasaporte</option>
+                </Field>
+                <Field
+                  type="number"
+                  name="numberIdentification"
+                  placeholder="Número de identificación"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  as="select"
+                  className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8 w-[100%]"
+                >
+                  <option value="" disabled selected>
+                    Tipo
+                  </option>
+                  <option value="">hola</option>
+                </Field>
+                <Field
+                  type="text"
+                  name="rol"
+                  placeholder="Rol"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+              </div>
+              {errors.name && touched.name && (
+                <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                  {errors.name}
+                </p>
+              )}
+              {errors.lastName && touched.lastName && (
+                <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                  {errors.lastName}
+                </p>
+              )}
+              {errors.email && touched.email && (
+                <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                  {errors.email}
+                </p>
+              )}
 
-        <form
+              <span className="mb-6 h-[2px] w-full bg-[#0000004D] lg:w-[75%]"></span>
+              <div className="px-12 text-center font-mulish text-sm">
+                <p className="mb-4 text-[#0000008D]">
+                  Es posible que los usuarios de nuestro servicio hayan subido
+                  tu información de contacto en Instagram.{" "}
+                  <a href="#" className="text-[#2987f2]">
+                    Mas Información
+                  </a>
+                </p>
+                <p className="text-[#0000008D]">
+                  Al registrarte, aceptas nuestras Condiciones, nuestra
+                  <a href="#" className="text-[#2987f2]">
+                    {" "}
+                    Política de Privacidad
+                  </a>{" "}
+                  y nuestra{" "}
+                  <a href="#" className="text-[#2987f2]">
+                    {" "}
+                    Política de Cookies.
+                  </a>
+                </p>
+              </div>
+              {page > 1 && (
+                <button onClick={() => setPage((oldPage) => oldPage - 1)}>
+                  Anterior
+                </button>
+              )}
+              <button
+                onClick={() => setPage((oldPage) => oldPage + 1)}
+                disabled={!isValid || !dirty}
+                type="submit"
+                className={
+                  "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0  cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed"
+                }
+              >
+                Siguiente
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+      {/* <span className="w-full h-[52%] z-[0] relative bg-gradient-to-r from-[#F5CCB1] to-[#F3B191] block"></span>
+      <span className="w-full h-[48%] z-[0] relative bg-[#F5F5F5] block"></span> */}
+    </>
+  );
+};
+
+{
+  /* <form
           onSubmit={handleSubmit}
           className="bg-[#FFFFFF]/90 flex flex-col items-center w-[400px] rounded-[20px] pt-12 pb-7"
         >
@@ -97,7 +177,7 @@ export const CreateUser = () => {
               name="name"
               value={values.name}
               /* onChange={(e) => handleChange(e)} */
-              onBlur={(e) => validateName(e.target.value)}
+  /* onBlur={(e) => validateName(e.target.value)}
               placeholder="Nombre"
               className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
             />
@@ -155,7 +235,12 @@ export const CreateUser = () => {
           </div>
           <>
             {errorMessages.map((m, i) => (
-              <p key={i} className="text-[#DF5478] mb-4 font-mulish text-sm mx-[10%] text-center">{m}</p>
+              <p
+                key={i}
+                className="text-[#DF5478] mb-4 font-mulish text-sm mx-[10%] text-center"
+              >
+                {m}
+              </p>
             ))}
           </>
           <span className="mb-6 h-[2px] w-full bg-[#0000004D] lg:w-[75%]"></span>
@@ -183,20 +268,12 @@ export const CreateUser = () => {
           <button
             disabled={!name || errorName || errorLastName || errorEmail}
             type="submit"
-            className={"font-mulish mt-5 px-16 py-2 rounded-[7px] m-0  cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed"}
+            className={
+              "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0  cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed"
+            }
             onClick={() => setPage(2)}
           >
             {page === 2 ? "Crear" : "Siguiente"}
           </button>
-        </form>
-      </div>
-      {/* <span className="w-full h-[52%] z-[0] relative bg-gradient-to-r from-[#F5CCB1] to-[#F3B191] block"></span>
-      <span className="w-full h-[48%] z-[0] relative bg-[#F5F5F5] block"></span> */}
-    </>
-  );
-};
-
-/* bg-gradient-to-r from-[#DD527C] to-[#EE634C] */
-/* !errorName && !errorLastName && !errorEmail
-                ? "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0  cursor-pointer bg-[#91BA4D] text-[#FFFFFF]"
-                : "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0 bg-[#D9D9D9] text-[#FFFFFF]" */
+        </form> */
+}
