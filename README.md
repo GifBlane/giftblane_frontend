@@ -6,7 +6,7 @@ Before getting started, make sure you have the following tools installed:
 
 * [Node.js](https://nodejs.org/en/)
 
-* [PNPM](https://pnpm.js.org)
+* [NPM](https://www.npmjs.com)
 
 ## Installation
 To set up the project, follow these steps:
@@ -26,12 +26,12 @@ cd giftblane_frontend
 #### Copy code
 
 ```
-pnpm install
+npm install
 ```
 3. Start the development server:
 #### Copy code
 ```
-pnpm run dev
+npm run dev
 ```
 The application will be running at http://localhost:3000.
 
@@ -40,8 +40,8 @@ To deploy the application, run the following command:
 
 ## Copy code
 ```
-pnpm run build
-pnpm run start
+npm run build
+npm run start
 ```
 This will build the application and start the production server.
 
