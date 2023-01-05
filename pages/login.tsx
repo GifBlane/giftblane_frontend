@@ -9,14 +9,17 @@ import { useRouter } from "next/router";
 
 const Login: NextPage = () => {
   const [error, setError] = useState("");
-  const [email, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
 
-  const router = useRouter();
+  const inputRef = useRef(null);
+
+  const resetFileInput = () => {
+    // resetting the input value
+    inputRef.current.value = "";
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,9 +29,11 @@ const Login: NextPage = () => {
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()/=+?[\]{}~-])[A-Za-z\d!@#$%^&*()/=+?[\]{}~-]{8,}$/;
     const isPasswordValid = passwordValidator.test(credentials.password);
     if (!isPasswordValid) {
+      resetFileInput();
       setError(
         "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter numérico y un carácter especial y debe tener al menos 8 caracteres"
       );
+
       return;
     }
     try {
@@ -54,6 +59,7 @@ const Login: NextPage = () => {
       switch (status) {
         case 400:
           errorMessage = "You have entered an invalid password";
+
           break;
         case 401:
           errorMessage = "Unauthorized";
@@ -71,12 +77,10 @@ const Login: NextPage = () => {
           errorMessage = "An error occurred";
           break;
       }
-      setError(err.response.data.message);
       setError(errorMessage);
       // Resetear el formulario de inicio de sesión
-      // Deshabilitado durante desarrollo
-      setUsername("");
-      setPassword("");
+      // Deshabilitado durante desarrollo=
+      resetFileInput();
     }
   };
 
@@ -108,13 +112,13 @@ const Login: NextPage = () => {
               event.preventDefault();
               handleSubmit(event);
             }}
-            className="flex flex-col gap-2 min-h-[340px] min-w-[388px] justify-between items-center bg-[#ffffff]/80 shadow-sm rounded-[20px] py-10 px-12 "
+            className="flex flex-col gap-2 min-h-[340px] max-w-[388px] min-w-[388px] justify-between items-center bg-[#ffffff]/80 shadow-sm rounded-[20px] py-10 px-12 "
           >
             <input
               className="w-full py-2 px-5 rounded-[7px] placeholder:text-[#515151] text-black "
               name="Gmail"
+              ref={inputRef}
               required
-              value={email}
               placeholder="Gmail"
               onChange={(e) =>
                 setCredentials({
@@ -127,7 +131,7 @@ const Login: NextPage = () => {
               className="w-full py-2 px-5 rounded-[7px] placeholder:text-[#515151] text-black "
               type="password"
               name="password"
-              value={password}
+              ref={inputRef}
               required
               placeholder="Contraseña"
               aria-label="Password"
@@ -139,12 +143,12 @@ const Login: NextPage = () => {
               }
             />
             {/* Check box "Recordar Inicio de sesion" */}
-            {/* <div>
-              <input type="checkbox" className="mr-2 w-3 h-3" />
+            <div>
+              {/* <input type="checkbox" className="mr-2 w-3 h-3" /> */}
               <label className="text-[#515151]">
-                Recordar inicio de sesión
+                {/* Recordar inicio de sesión */}
               </label>
-            </div> */}
+            </div>
             {
               // Si hay un error, muestre el mensaje de error
               error && <p className="text-red-500">{error}</p>
