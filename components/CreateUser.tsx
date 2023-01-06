@@ -13,6 +13,13 @@ export const CreateUser = () => {
     email: Yup.string()
       .email("No es un email válido")
       .required("El email es obligatorio"),
+    idType: Yup.string()
+      .required("Opción no válida")
+      .oneOf(["DNI", "cédula", "pasaporte"], "Opción no válida")
+      .label("Tipo de identificación"),
+    /* idNumber: Yup.string()
+      .min(9, "No puede haber menos de nueve caracteres")
+      .max(9, "No puede haber más de 9 caracteres"), */
   });
 
   return (
@@ -35,7 +42,7 @@ export const CreateUser = () => {
             email: "",
             idType: "",
             idNumber: "",
-            type: "",
+            typeUser: "",
             role: "",
           }}
           onSubmit={(values) => {
@@ -43,7 +50,7 @@ export const CreateUser = () => {
           }}
           validationSchema={validationSchema}
         >
-          {({ errors, touched, isValid, dirty }) => (
+          {({ errors, touched, isValid, dirty, values }) => (
             <Form className="bg-[#FFFFFF]/90 flex flex-col items-center w-[400px] rounded-[20px] pt-12 pb-7">
               <div
                 className={page === 1 ? "flex flex-col items-center" : "hidden"}
@@ -52,7 +59,7 @@ export const CreateUser = () => {
                   type="text"
                   name="name"
                   placeholder="Nombre"
-                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish invalid:border-red-800"
                 />
                 <Field
                   type="text"
@@ -72,36 +79,45 @@ export const CreateUser = () => {
               >
                 <Field
                   as="select"
+                  name="idType"
                   className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8"
+                  placeholder="Tipo de identificación"
                 >
-                  <option selected disabled>
+                  <option value={null} selected>
                     Tipo de identificación
                   </option>
                   <option value="DNI">DNI</option>
-                  <option value="Cédula">Cédula</option>
-                  <option value="Pasaporte">Pasaporte</option>
+                  <option value="cédula">Cédula</option>
+                  <option value="pasaporte">Pasaporte</option>
                 </Field>
                 <Field
-                  type="number"
-                  name="numberIdentification"
+                  type="text"
+                  name="idNumber"
                   placeholder="Número de identificación"
+                  disabled={values.idType === "" || values.idType.length < 1}
                   className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
                 />
                 <Field
                   as="select"
+                  name="typeUser"
                   className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8 w-[100%]"
                 >
-                  <option value="" disabled selected>
-                    Tipo
+                  <option selected disabled>
+                    Tipo de usuario
                   </option>
-                  <option value="">hola</option>
+                  <option value="nemo - blackCard">Nemo - BlackCard</option>
                 </Field>
                 <Field
-                  type="text"
+                  as="select"
                   name="rol"
-                  placeholder="Rol"
-                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
-                />
+                  selection
+                  className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8 w-[100%]"
+                >
+                  <option selected disabled>
+                    Rol
+                  </option>
+                  <option value="blackCard">Admin - Vendedor</option>
+                </Field>
               </div>
               {errors.name && touched.name && (
                 <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
@@ -116,6 +132,16 @@ export const CreateUser = () => {
               {errors.email && touched.email && (
                 <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
                   {errors.email}
+                </p>
+              )}
+              {errors.idType && touched.idType && (
+                <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                  {errors.idType}
+                </p>
+              )}
+              {errors.idNumber && touched.idNumber && (
+                <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                  {errors.idNumber}
                 </p>
               )}
 
@@ -147,15 +173,21 @@ export const CreateUser = () => {
                 </button>
               )}
               <button
-                onClick={() => setPage((oldPage) => oldPage + 1)}
-                disabled={!isValid || !dirty}
-                type="submit"
+                type="button"
+                onClick={() => setPage((oldPage) => page < 2 && oldPage + 1)}
+                disabled={
+                  !dirty ||
+                  (page === 1
+                    ? !!errors.name || !!errors.lastName || !!errors.email
+                    : false)
+                }
                 className={
                   "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0  cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed"
                 }
               >
-                Siguiente
+                {page === 1 ? "Siguiente" : "Crear"}
               </button>
+              <button type="submit">Hdad</button>
             </Form>
           )}
         </Formik>
