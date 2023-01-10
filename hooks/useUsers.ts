@@ -40,7 +40,8 @@ export const useUsers = ({ baseUrl, pagination }: useUsers) => {
         setError(err);
         setIsLoading(false);
       });
-  }, [baseUrl, params]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { users, isLoading, error };
 };
