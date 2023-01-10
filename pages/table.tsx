@@ -68,7 +68,7 @@ const TablePage: NextPage = () => {
           </tbody>
         </table>
       </div>
-    </Layout>
+    </div>
   );
 };
 
