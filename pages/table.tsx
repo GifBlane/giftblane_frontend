@@ -1,7 +1,9 @@
 import axios from "axios";
 import { NextPage } from "next";
+
 import { useEffect, useState } from "react";
 import { IUser } from "../models/usersData";
+
 
 const TablePage: NextPage = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -66,7 +68,7 @@ const TablePage: NextPage = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </Layout>
   );
 };
 
