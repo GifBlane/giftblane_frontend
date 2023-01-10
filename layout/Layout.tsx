@@ -11,7 +11,7 @@ interface MenuItem {
 
 const Container = ({ children }) => (
   <main
-    className="items-center justify-between min-h-screen w-full  relative bg-gradient-to-b from-[#f5ccb1] to-[#d0cee2] "
+    className="items-center justify-center min-h-screen w-full  relative bg-gradient-to-b from-[#f5ccb1] to-[#d0cee2] "
     style={{
       background:
         "linear-gradient(to bottom,#f5ccb1 0%,#f5ccb1 50%, #d0cee2 50%, #d0cee2 100%) ",

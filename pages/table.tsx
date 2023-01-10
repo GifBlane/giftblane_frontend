@@ -3,19 +3,20 @@ import { NextPage } from "next";
 
 import { useEffect, useState } from "react";
 import { IUser } from "../models/usersData";
-
+import Layout from "../layout/Layout";
+import { menu } from "../layout/menu";
 
 const TablePage: NextPage = () => {
   const [users, setUsers] = useState<IUser[]>([]);
 
   useEffect(() => {
-    axios("http://localhost:3001/users").then((res) => {
+    axios("http://localhost:3032/users").then((res) => {
       setUsers(res.data.body.data);
     });
   }, []);
 
   return (
-    <div>
+    <Layout title="Table Page" menu={menu}>
       <h1>Listado de usuarios</h1>
       <div style={{ width: "900px", display: "grid", margin: "2em auto" }}>
         <table className="table-auto min-w-full">
