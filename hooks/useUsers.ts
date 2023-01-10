@@ -40,7 +40,7 @@ export const useUsers = ({ baseUrl, pagination }: useUsers) => {
         setError(err);
         setIsLoading(false);
       });
-  }, [baseUrl]);
+  }, [baseUrl, params]);
 
   return { users, isLoading, error };
 };
