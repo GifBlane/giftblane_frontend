@@ -1,4 +1,3 @@
-import axios from "axios";
 import { NextPage } from "next";
 
 import { useEffect, useState } from "react";
@@ -6,14 +5,20 @@ import { IUser } from "../models/usersData";
 import Layout from "../layout/Layout";
 import { menu } from "../layout/menu";
 
-const TablePage: NextPage = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
+import { useUsers } from "../hooks";
 
-  useEffect(() => {
-    axios("http://localhost:3032/users").then((res) => {
-      setUsers(res.data.body.data);
-    });
-  }, []);
+const TablePage: NextPage = () => {
+  const { isLoading, error, users } = useUsers({
+    baseUrl: "http://localhost:3001/users",
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <Layout title="Table Page" menu={menu}>
@@ -42,7 +47,7 @@ const TablePage: NextPage = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {users &&
+            {users && users.length > 0 ? (
               users.map((user, i) => (
                 <tr key={i} className="bg-white hover:bg-gray-100 ">
                   <td className="p-4 py-7 w-4">
@@ -65,7 +70,14 @@ const TablePage: NextPage = () => {
                   <td className="text-left text-[#1672EC]">{user.type_id}</td>
                   <td className="text-left">{user.email}</td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center">
+                  No hay usuarios
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
