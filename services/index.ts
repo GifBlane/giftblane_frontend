@@ -1,3 +1,3 @@
 import { AuthService } from "./auth.service";
 
-export const authService = new AuthService("//localhost:3032/auth/");
+export const authService = new AuthService(process.env.API_HOST+"/auth");

@@ -9,7 +9,7 @@ import { useUsers } from "../hooks";
 
 const TablePage: NextPage = () => {
   const { isLoading, error, users } = useUsers({
-    baseUrl: "http://localhost:3001/users",
+    baseUrl: process.env.API_HOST + "/users",
   });
 
   if (isLoading) {
@@ -20,6 +20,8 @@ const TablePage: NextPage = () => {
     return <div>Error: {error.message}</div>;
   }
 
+  const baseurl = process.env.API_HOST + "/users";
+  console.log(baseurl);
   return (
     <Layout title="Table Page" menu={menu}>
       <h1>Listado de usuarios</h1>
