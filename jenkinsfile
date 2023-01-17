@@ -1,0 +1,38 @@
+pipeline {
+    agent {
+        node {
+            label 'nodejs'
+        }
+    }
+    stages {
+        stage('Clone repository') {
+            steps {
+                git 'https://github.com/GifBlane/giftblane_frontend.git'
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Build and Test') {
+            steps {
+                sh 'npm run build'
+                sh 'npm test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'npm run start'
+            }
+        }
+    }
+    post {
+        success {
+            slackSend color: '#00FF00', message: "Pipeline succeeded: ${currentBuild.fullDisplayName}"
+        }
+        failure {
+            slackSend color: '#FF0000', message: "Pipeline failed: ${currentBuild.fullDisplayName}"
+        }
+    }
+}

@@ -15,7 +15,7 @@ interface MenuItem {
     //   { label: 'Mostrar Lista De Usuario', href: '/Usuarios/Userlist' },
     // ], },
     { label: 'Usuario', href: '/dashboard' },
-    { label: 'Crear Usuario', href: '/createtable' },
+    { label: 'Crear Usuario', href: '/CreateUserNemo' },
     { label: 'Mostar Lista De Usuarios', href: '/table' },
     { label: 'Tarjetas', href: '/table' },
     { label: 'Pines', href: '/table' },

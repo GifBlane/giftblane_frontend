@@ -40,6 +40,7 @@ next-env.d.ts
 .env.production
 .env.staging
 .env.testing
+.env
 
 package-lock.json
 
