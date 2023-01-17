@@ -1,11 +1,7 @@
 pipeline {
  agent any
     stages {
-        stage('Clone repository') {
-            steps {
-                git 'https://github.com/GifBlane/giftblane_frontend.git'
-            }
-        }
+   
         stage('Install dependencies') {
             steps {
                 sh 'npm install'
