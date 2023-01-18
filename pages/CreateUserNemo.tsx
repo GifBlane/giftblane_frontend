@@ -1,12 +1,11 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
-import { CreateUser } from "../components/CreateUser";
+import { UserNemoForm } from "../components/UserNemoForm";
 
 const CreateUserNemo: NextPage = () => {
-  const [formPage, setFormPage] = useState(1);
 
   return (
-    <CreateUser />
+    <UserNemoForm />
   );
 };
 

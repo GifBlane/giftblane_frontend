@@ -3,7 +3,7 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useCountriesAndStates } from "../hooks/useCountriesAndStates";
 
-export const CreateUser = () => {
+export const UserNemoForm = () => {
   const [page, setPage] = useState(4);
   const { countries, states, getStates } = useCountriesAndStates();
 
