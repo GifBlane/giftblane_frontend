@@ -31,8 +31,6 @@ export const useCountriesAndStates = () => {
   };
 
   useEffect(() => {
-    console.log(process.env.COUNTRIES_API_KEY);
-    
     axios
       .get("https://www.universal-tutorial.com/api/getaccesstoken", {
         headers: {
