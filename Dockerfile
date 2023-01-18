@@ -19,7 +19,7 @@ COPY [".","/usr/src/"]
 # COPY . .
 RUN npm run build
 
-EXPOSE 3001
+EXPOSE 3000
 
 # # Stage 3: run
 # FROM node:18-alpine
