@@ -2,7 +2,7 @@ FROM node:18-alpine AS builder
 
 WORKDIR /usr/src
 
-COPY ["package.json", "package-lock.json", "/usr/src/"]
+COPY ["package.json", "/usr/src/"]
 
 # ARG NODE_ENV
 # ENV NODE_ENV $NODE_ENV
