@@ -4,8 +4,7 @@ pipeline {
  
     stages {
         stage('build'){
-            step{
-                git 'https://github.com/GifBlane/giftblane_frontend.git'
+            steps{
                 bat 'npm install'
             }
         }
