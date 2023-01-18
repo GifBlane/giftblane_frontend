@@ -1,29 +1,12 @@
 pipeline {
- agent any
-    stages {
-   
-        stage('Install dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Build and Test') {
-            steps {
-                sh 'npm run build'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'npm run start'
+    agent any
+    tools {nodejs "node"}
+ 
+    stages{
+        stage('build'){
+            step{
+                bat 'npm install'
+                }
             }
         }
     }
-    post {
-        success {
-            slackSend color: '#00FF00', message: "Pipeline succeeded: ${currentBuild.fullDisplayName}"
-        }
-        failure {
-            slackSend color: '#FF0000', message: "Pipeline failed: ${currentBuild.fullDisplayName}"
-        }
-    }
-}
