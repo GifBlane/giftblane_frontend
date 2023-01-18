@@ -1,7 +1,12 @@
+import { NextPage } from 'next';
 import React from 'react'
+import { TablePins } from '../components/TablePins'
 
-export const listPins = () => {
+
+const listPins: NextPage = () => {
   return (
-    <div>listPins</div>
+    <TablePins />
   )
 }
+
+export default listPins;

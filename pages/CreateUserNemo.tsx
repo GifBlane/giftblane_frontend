@@ -1,12 +1,13 @@
 import { NextPage } from "next";
+import React, { useState } from "react";
 import { CreateUser } from "../components/CreateUser";
-import { TradeData } from "../components/TradeData";
 
-const Test: NextPage = () => {
+const CreateUserNemo: NextPage = () => {
+  const [formPage, setFormPage] = useState(1);
+
   return (
-    // <CreateUser />
-    <TradeData />
+    <CreateUser />
   );
 };
 
-export default Test;
+export default CreateUserNemo;

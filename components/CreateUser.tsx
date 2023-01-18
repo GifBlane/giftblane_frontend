@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useCountriesAndStates } from "../hooks/useCountriesAndStates";
 
 export const CreateUser = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(4);
+  const { countries, states, getStates } = useCountriesAndStates();
 
   // let regex = new RegExp("^[A-Z][0-9]{8}$");
 
@@ -31,6 +33,30 @@ export const CreateUser = () => {
     role: Yup.string()
       .required("Elije un rol para el usuario")
       .oneOf(["adminVendedor"], "Elije un rol para el usuario"),
+    companyName: Yup.string()
+      .required("El nombre de la Empresa es obligatorio")
+      .min(1),
+    idCompany: Yup.string().required("El ID de la Empresa es obligatorio"),
+    legalRepresentative: Yup.string().required(
+      "El Representante Legal es obligatorio"
+    ),
+    idLegalRepresentative: Yup.string().required(
+      "El ID del Representante es obligatorio"
+    ),
+    numberIdentification: Yup.number().required(
+      "El número de identificación de la empresa es obligatorio"
+    ),
+    percentajeCommission: Yup.number().required(
+      "El Porcentaje de comisión es obligatorio"
+    ),
+    postalCode: Yup.string().required("El código postal es obligatorio"),
+    companyAdress: Yup.string().required("La dirección es obligatoria").min(1),
+    country: Yup.string().required("Debes elegir un país"),
+    state: Yup.string().required("Debes elegir un estado"),
+    companyPhone: Yup.number().required("El número telefónico es obligatorio "),
+    companyEmail: Yup.string()
+      .email("No es un email válido")
+      .required("El email es obligatorio"),
   });
 
   return (
@@ -61,9 +87,47 @@ export const CreateUser = () => {
             phone: "",
             typeUser: "",
             role: "",
+            // Datos de empresa
+            companyName: "",
+            idCompany: "",
+            legalRepresentative: "",
+            idLegalRepresentative: "",
+            numberIdentification: "",
+            percentajeCommission: "",
+            companyAdress: "",
+            postalCode: "",
+            country: "",
+            state: "",
+            companyPhone: "",
+            companyEmail: "",
           }}
           onSubmit={(values) => {
-            console.log(values);
+            console.log({
+              dataUser: {
+                name: values.name,
+                lastName: values.lastName,
+                idType: values.idType,
+                idNumber: values.idNumber,
+                email: values.email,
+                phone: values.phone,
+                typeUser: values.typeUser,
+                role: values.role,
+              },
+              dataCompany: {
+                companyName: values.companyName,
+                idCompany: values.idCompany,
+                legalRepresentative: values.legalRepresentative,
+                idLegalRepresentative: values.idLegalRepresentative,
+                numberIdentification: values.numberIdentification,
+                percentajeCommission: values.percentajeCommission,
+                companyAdress: values.companyAdress,
+                postalCode: values.postalCode,
+                country: values.country,
+                state: values.state,
+                companyPhone: values.companyPhone,
+                companyEmail: values.companyEmail,
+              },
+            });
           }}
           validationSchema={validationSchema}
         >
@@ -183,7 +247,167 @@ export const CreateUser = () => {
                   )}
                 </div>
               </div>
-
+              <div
+                className={page === 3 ? "flex flex-col items-center" : "hidden"}
+              >
+                <Field
+                  type="text"
+                  name="companyName"
+                  placeholder="Nombre de la Empresa"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="text"
+                  name="idCompany"
+                  placeholder="ID de la Empresa"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="text"
+                  name="legalRepresentative"
+                  placeholder="Representante Legal"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="text"
+                  name="idLegalRepresentative"
+                  placeholder="ID Representante Legal"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="number"
+                  name="numberIdentification"
+                  placeholder="N° Identificación Empresa"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="number"
+                  name="percentajeCommission"
+                  placeholder="% de cobro"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                {errors.companyName && touched.companyName && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m text-center">
+                    {errors.companyName}
+                  </p>
+                )}
+                {errors.idCompany && touched.idCompany && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m text-center">
+                    {errors.idCompany}
+                  </p>
+                )}
+                {errors.legalRepresentative && touched.legalRepresentative && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m  text-center">
+                    {errors.legalRepresentative}
+                  </p>
+                )}
+                {errors.idLegalRepresentative &&
+                  touched.idLegalRepresentative && (
+                    <p className="text-[#DF5478] mb-4 font-mulish text-m  text-center">
+                      {errors.idLegalRepresentative}
+                    </p>
+                  )}
+                {errors.numberIdentification &&
+                  touched.numberIdentification && (
+                    <p className="text-[#DF5478] mb-4 font-mulish text-m  text-center">
+                      {errors.numberIdentification}
+                    </p>
+                  )}
+                {errors.percentajeCommission &&
+                  touched.percentajeCommission && (
+                    <p className="text-[#DF5478] mb-4 font-mulish text-m  text-center">
+                      {errors.percentajeCommission}
+                    </p>
+                  )}
+              </div>
+              <div
+                className={page === 4 ? "flex flex-col items-center" : "hidden"}
+              >
+                <Field
+                  type="text"
+                  name="companyAdress"
+                  placeholder="Dirección"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="text"
+                  name="postalCode"
+                  placeholder="Código Postal"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  as="select"
+                  name="country"
+                  onChange={(e) => {
+                    handleChange(e);
+                    getStates(e.target.value);
+                  }}
+                  className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8 w-[215px]"
+                >
+                  <option value="" selected>
+                    País
+                  </option>
+                  {countries &&
+                    countries.map((c, i) => (
+                      <option key={i}>{c.country_name}</option>
+                    ))}
+                </Field>
+                <Field
+                  as="select"
+                  name="state"
+                  className="text-[#515151] py-[0.56rem] px-[1rem] outline-none rounded-[7px] border border-[#BABABA] font-mulish mb-8 w-[215px]"
+                >
+                  <option value="" selected>
+                    Estado / Provincia
+                  </option>
+                  {states.length > 0 &&
+                    states.map((s, i) => (
+                      <option key={i}>{s.state_name}</option>
+                    ))}
+                </Field>
+                <Field
+                  type="number"
+                  name="companyPhone"
+                  placeholder="Teléfono Empresa"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                <Field
+                  type="email"
+                  name="companyEmail"
+                  placeholder="Email Empresa"
+                  className="placeholder:text-[#515151] p-2 outline-none rounded-[7px] border border-[#BABABA] mb-8 font-mulish"
+                />
+                {errors.companyAdress && touched.companyAdress && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                    {errors.companyAdress}
+                  </p>
+                )}
+                {errors.postalCode && touched.postalCode && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                    {errors.postalCode}
+                  </p>
+                )}
+                {errors.country && touched.country && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                    {errors.country}
+                  </p>
+                )}
+                {errors.state && touched.state && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                    {errors.state}
+                  </p>
+                )}
+                {errors.companyPhone && touched.companyPhone && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                    {errors.companyPhone}
+                  </p>
+                )}
+                {errors.companyEmail && touched.companyEmail && (
+                  <p className="text-[#DF5478] mb-4 font-mulish text-m mx-[10%] text-center">
+                    {errors.companyEmail}
+                  </p>
+                )}
+              </div>
               <span className="mb-6 h-[2px] w-full bg-[#0000004D] lg:w-[75%]"></span>
               <div className="px-12 text-center font-mulish text-sm">
                 <p className="mb-4 text-[#0000008D]">
@@ -215,7 +439,7 @@ export const CreateUser = () => {
                 </button>
               )}
               <button
-                type="submit"
+                type="button"
                 onClick={() => setPage((oldPage) => page < 4 && oldPage + 1)}
                 disabled={
                   !dirty ||
@@ -226,14 +450,26 @@ export const CreateUser = () => {
                       !!errors.idNumber ||
                       !!errors.email
                     : false) ||
-                  (page === 2 ? !!errors.typeUser || !!errors.role : false)
+                  (page === 2 ? !!errors.typeUser || !!errors.role : false) ||
+                  (page === 3 ? !!errors.companyName || !!errors.idCompany || !errors.legalRepresentative || !!errors.idLegalRepresentative || !!errors.numberIdentification || !!errors.percentajeCommission : false)
                 }
-                className={
-                  "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0 w-[200px] cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed"
-                }
+                className={`font-mulish mt-5 px-16 py-2 rounded-[7px] m-0 w-[200px] cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed ${
+                  page >= 4 && "hidden"
+                }`}
               >
-                {page < 4 ? "Siguiente" : "Crear"}
+                Siguiente
               </button>
+              {page === 4 && (
+                <button
+                  type="submit"
+                  disabled={page === 4 && !!errors.companyAdress || !!errors.postalCode || !!errors.country || !!errors.state }
+                  className={
+                    "font-mulish mt-5 px-16 py-2 rounded-[7px] m-0 w-[200px] cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed"
+                  }
+                >
+                  Crear
+                </button>
+              )}
             </Form>
           )}
         </Formik>
