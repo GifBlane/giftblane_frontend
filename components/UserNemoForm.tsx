@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useCountriesAndStates } from "../hooks/useCountriesAndStates";
 
 export const UserNemoForm = () => {
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(1);
   const { countries, states, getStates } = useCountriesAndStates();
 
   // let regex = new RegExp("^[A-Z][0-9]{8}$");
@@ -451,7 +451,7 @@ export const UserNemoForm = () => {
                       !!errors.email
                     : false) ||
                   (page === 2 ? !!errors.typeUser || !!errors.role : false) ||
-                  (page === 3 ? !!errors.companyName || !!errors.idCompany || !errors.legalRepresentative || !!errors.idLegalRepresentative || !!errors.numberIdentification || !!errors.percentajeCommission : false)
+                  (page === 3 ? !!errors.companyName || !!errors.idCompany || !!errors.legalRepresentative || !!errors.idLegalRepresentative || !!errors.numberIdentification || !!errors.percentajeCommission : false)
                 }
                 className={`font-mulish mt-5 px-16 py-2 rounded-[7px] m-0 w-[200px] cursor-pointer bg-[#91BA4D] text-[#FFFFFF] disabled:bg-[#D9D9D9] disabled:cursor-not-allowed ${
                   page >= 4 && "hidden"
