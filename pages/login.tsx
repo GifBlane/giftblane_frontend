@@ -49,45 +49,44 @@ const Login: NextPage = () => {
 			document.cookie = `token=${response.data.body.token}`;
 			// Redirigir a la ruta protegida
 			Router.push("/dashboard");
-		} catch (err: any) {
-			if (err.response) {
-				// const message = err.response.data.message;
-				// console.log(message);
-				// setError(message);
-				// Obtener el estado de error y el mensaje
+		} catch (err) {
+			// const message = err.response.data.message;
+			// console.log(message);
+			// setError(message);
+			// Obtener el estado de error y el mensaje
 
-				// Obtener el estado de error y el mensaje
-				const status = err.response.code;
-				console.log(status);
-				// const message = err.response.data.message;
+			// Obtener el estado de error y el mensaje
+			const status = err.response.status;
+			console.log(status);
+			// const message = err.response.data.message;
 
-				// Establecer el mensaje de error apropiado según el estado del error
-				let errorMessage = "";
-				switch (status) {
-					case 400:
-						errorMessage = "You have entered an invalid password";
-						break;
-					case 401:
-						errorMessage = "Unauthorized";
-						break;
-					case 403:
-						errorMessage = "Forbidden";
-						break;
-					case 404:
-						errorMessage = "Not found";
-						break;
-					case 500:
-						errorMessage = 'parameter "email" has invalid "undefined" value';
-						break;
-					default:
-						errorMessage = "An error occurred";
-						break;
-				}
-				setError(errorMessage);
-				// Resetear el formulario de inicio de sesión
-				// Deshabilitado durante desarrollo=
-				resetFileInput();
+			// Establecer el mensaje de error apropiado según el estado del error
+			let errorMessage = "";
+			switch (status) {
+				case 400:
+					errorMessage = "You have entered an invalid password";
+					break;
+				case 401:
+					errorMessage = "Unauthorized";
+					break;
+				case 403:
+					errorMessage = "Forbidden";
+					break;
+				case 404:
+					errorMessage =
+						"La direccion de correo electronico o la contraseña que has introducido no son correctas.";
+					break;
+				case 500:
+					errorMessage = 'parameter "email" has invalid "undefined" value';
+					break;
+				default:
+					errorMessage = "An error occurred";
+					break;
 			}
+			setError(errorMessage);
+			// Resetear el formulario de inicio de sesión
+			// Deshabilitado durante desarrollo=
+			resetFileInput();
 		}
 	};
 
