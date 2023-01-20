@@ -132,10 +132,10 @@ const Login: NextPage = () => {
 						>
 							<input
 								className="w-full py-2 px-5 rounded-[7px] placeholder:text-[#515151] text-black "
-								name="Email"
+								name="Gmail"
 								ref={inputRef}
 								required
-								placeholder="Gmail"
+								placeholder="Email"
 								onChange={(e) =>
 									setCredentials({
 										...credentials,
