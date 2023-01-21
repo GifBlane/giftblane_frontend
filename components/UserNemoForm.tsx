@@ -338,7 +338,7 @@ export const UserNemoForm = () => {
                 <Field
                   as="select"
                   name="country"
-                  onChange={(e) => {
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                     handleChange(e);
                     getStates(e.target.value);
                   }}
