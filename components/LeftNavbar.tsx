@@ -1,85 +1,115 @@
 import Link from "next/link";
 import { useState } from "react";
 import cn from "classnames";
-import { MenuItem } from "../layout/menu";
+import { Menus } from "../layout/menu";
 import { CSSProperties } from "react";
 
-const LeftNavbar = ({ menu }: { menu: MenuItem[] }) => {
-  // Initialize the state for the dropdown menus
-  const [openMenus, setOpenMenus] = useState<string[]>([]);
+import { BsChevronDown } from "react-icons/bs";
 
-  // Toggle the dropdown menu when the menu item is clicked
-  const toggleMenu = (label: string) => {
-    if (openMenus.includes(label)) {
-      setOpenMenus(openMenus.filter((l) => l !== label));
-    } else {
-      setOpenMenus([...openMenus, label]);
-    }
-  };
-  const submenuStyles: CSSProperties = {
-    marginTop: "48px", // height of the main menu item
-  };
+const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
+	// Initialize the state for the dropdown menus
+	const [submenuOpen, setsubmenuOpen] = useState(false);
+	const [submenuOpenlv2, setsubmenuOpenlv2] = useState(false);
 
-  return (
-    <aside className=" h-screen w-64 z-[1] absolute bg-[#fdf6f1]/80">
-      <div className="pt-6 mb-10 px-4 flex items-center mx-auto bg-[#D95B60]">
-        <img
-          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
-          alt="User"
-          className="h-14 mb-6 rounded-l-2xl rounded-r-2xl mx-auto mt-11"
-        />
-        <p className="text-white font-bold mr-14 mt-4 text-lg ">John Doe</p>
-      </div>
-      <div className="overflow-y-auto ">
-        {menu.map((item) => (
-          <div key={item.label} className="relative">
-            {item.submenu ? (
-              <>
-                <a
-                  onClick={() => toggleMenu(item.label)}
-                  className="flex items-center px-3 py-2 text-sm font-medium leading-5 text-black transition duration-150 ease-in-out  hover:text-white hover:bg-gray-700
-                  focus:outline-none focus:text-white focus:bg-gray-700 border-b border-"
-                >
-                  {item.label}
-                </a>
-                <div
-                  className={cn(
-                    "origin-top-right absolute right-0 mt-2 w-48  shadow-lg",
-                    { hidden: !openMenus.includes(item.label) }
-                  )}
-                  style={submenuStyles}
-                  id="sidebar-multi-level-example"
-                >
-                  <div className="py-1  bg-white shadow-xs">
-                    {item.submenu.map((subitem) => (
-                      <Link
-                        key={subitem.label}
-                        href={subitem.href}
-                        legacyBehavior
-                      >
-                        <a className="pl-12 block px-4 py-2 text-sm leading-5 text-black hover:bg-gray-100 focus:outline-none focus:bg-gray-100 border-b border-gray-700 ">
-                          {subitem.label}
-                        </a>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <Link href={item.href} legacyBehavior>
-                <a
-                  className="flex items-center px-3 py-2 text-sm font-medium leading-5 text-black transition duration-150 ease-in-out  hover:text-white hover:bg-gray-700
-                        focus:outline-none focus:text-white focus:bg-gray-700 border-b border-gray-700"
-                >
-                  {item.label}
-                </a>
-              </Link>
-            )}
-          </div>
-        ))}
-      </div>
-    </aside>
-  );
+	return (
+		<aside className=" h-screen w-64 z-[1] absolute bg-[#fdf6f1]/80">
+			<div className="pt-6 mb-10 px-4 flex items-center mx-auto bg-[#D95B60]">
+				<img
+					src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80"
+					alt="User"
+					className="h-14 mb-6 rounded-l-2xl rounded-r-2xl mx-auto mt-11"
+				/>
+				<p className="text-white font-bold mr-14 mt-4 text-lg ">John Doe</p>
+			</div>
+			<div className="">
+				<ul className="pt-2">
+					{/* Map through the menu items */}
+					{menu.map((menu, index) => (
+						<>
+							{/* Add the submenuOpen state to the li element */}
+							<li
+								key={index}
+								className={`text-gray-800 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white  mt-2 border-b-[1px] border-slate-600 ${
+									menu.spacing ? "mt-9" : "mt-2"
+								} `}
+							>
+								{/* // Add the submenuOpen state to the div element */}
+								<div
+									className="flex flex-row justify-between w-full"
+									onClick={() => setsubmenuOpen(!submenuOpen)} // Toggle the submenuOpen state*/}
+								>
+									<div>
+										<span className="text-base font-medum flex-1 ">
+											<a href={menu.href}>{menu.title}</a>
+										</span>
+									</div>
+									<div className="flex flex-1 items-center justify-evenly ">
+										{menu.submenu && (
+											<BsChevronDown
+												className={`  ${submenuOpen && "rotate-180"}`}
+												onClick={() => {
+													setsubmenuOpen(!submenuOpen);
+												}}
+											/>
+										)}
+									</div>
+								</div>
+							</li>
+							{menu.submenu && submenuOpen && (
+								<ul className="">
+									{menu.submenuItems.map((submenuItems, index) => (
+										<li
+											key={index}
+											className="text-gray-800 text-sm flex items-center gap-x-4 cursor-pointer p-2 px-10 hover:bg-light-white mt-2 border-b-[1px] border-slate-600 "
+											onClick={() => setsubmenuOpenlv2(!submenuOpenlv2)}
+										>
+											<div>
+												<span className="text-base font-medum flex-1 ">
+													<a href={submenuItems.href}>{submenuItems.title}</a>
+												</span>
+											</div>
+											<div className="flex flex-1 items-center justify-evenly ">
+												{submenuItems.submenu && (
+													<BsChevronDown
+														className={`  ${submenuOpenlv2 && "rotate-180"}`}
+													/>
+												)}
+											</div>
+											{/* Conditionally render the sub-submenu items */}
+											<div className="grid grid-flow-col">
+												{submenuItems.submenuItemslv2 && submenuOpenlv2 && (
+													<ul className="flex-col text-gray-800 text-sm flex items-center gap-x-4 cursor-pointer p-2 px-10 hover:bg-light-white rounded-md mt-2">
+														{submenuItems.submenuItemslv2.map(
+															(submenuItemslv2, index) => (
+																<li
+																	key={index}
+																	className={`text-gray-800 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white  mt-2 border-b-[1px] border-slate-600 ${
+																		menu.spacing ? "mt-9" : "mt-2"
+																	} `}
+																>
+																	<div className="">
+																		<span className="text-base font-medum flex-1">
+																			<a href={submenuItemslv2.href}>
+																				{submenuItemslv2.title}
+																			</a>
+																		</span>
+																	</div>
+																</li>
+															)
+														)}
+													</ul>
+												)}
+											</div>
+										</li>
+									))}
+								</ul>
+							)}
+						</>
+					))}
+				</ul>
+			</div>
+		</aside>
+	);
 };
 
 export default LeftNavbar;

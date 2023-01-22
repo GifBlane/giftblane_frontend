@@ -7,7 +7,6 @@ import "reactjs-popup/dist/index.css";
 import { Waves } from "../components/svg/Waves";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import cheerio from "cheerio";
 
 const Login: NextPage = () => {
 	const [error, setError] = useState("");
@@ -26,29 +25,32 @@ const Login: NextPage = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		// // Verificar que la contraseña cumpla con los criterios de seguridad
-		// const passwordValidator =
-		// 	/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()/=+?[\]{}~-])[A-Za-z\d!@#$%^&*()/=+?[\]{}~-]{8,}$/;
-		// const isPasswordValid = passwordValidator.test(credentials.password);
-		// if (!isPasswordValid) {
-		// 	resetFileInput();
-		// 	setError(
-		// 		"La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un carácter numérico y un carácter especial y debe tener al menos 8 caracteres"
-		// 	);
-
-		// 	return;
-		// }
 		try {
 			// Enviar una solicitud a la ruta de inicio de sesión en el backend
-			const response = await axios.post("http://localhost:3002/auth/login", {
-				email: credentials.email,
-				password: credentials.password,
-			});
+			const response = await axios.post(
+				"http://34.148.248.36:3002/auth/login",
+				{
+					email: credentials.email,
+					password: credentials.password,
+				}
+			);
 			// Si el inicio de sesión es exitoso, almacene el token en una cookie
 
 			document.cookie = `token=${response.data.body.token}`;
 			// Redirigir a la ruta protegida
-			Router.push("/dashboard");
+			const {
+				data: {
+					body: {
+						user: { name, lastName, typeId },
+						token,
+					},
+				},
+			} = response;
+			console.log(name, lastName, typeId, token);
+			Router.push({
+				pathname: "/dashboard",
+				query: { name, lastName, typeId, token },
+			});
 		} catch (err) {
 			// const message = err.response.data.message;
 			// console.log(message);
