@@ -40,7 +40,7 @@ const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
 								>
 									<div>
 										<span className="text-base font-medum flex-1 ">
-											<a href={menu.href}>{menu.title}</a>
+											<Link href={menu.href}>{menu.title}</Link>
 										</span>
 									</div>
 									<div className="flex flex-1 items-center justify-evenly ">
@@ -65,7 +65,9 @@ const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
 										>
 											<div>
 												<span className="text-base font-medum flex-1 ">
-													<a href={submenuItems.href}>{submenuItems.title}</a>
+													<Link href={submenuItems.href}>
+														{submenuItems.title}
+													</Link>
 												</span>
 											</div>
 											<div className="flex flex-1 items-center justify-evenly ">
@@ -89,9 +91,9 @@ const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
 																>
 																	<div className="">
 																		<span className="text-base font-medum flex-1">
-																			<a href={submenuItemslv2.href}>
+																			<Link href={submenuItemslv2.href}>
 																				{submenuItemslv2.title}
-																			</a>
+																			</Link>
 																		</span>
 																	</div>
 																</li>
