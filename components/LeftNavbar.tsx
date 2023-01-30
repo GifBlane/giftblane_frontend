@@ -8,8 +8,8 @@ import { BsChevronDown } from "react-icons/bs";
 
 const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
 	// Initialize the state for the dropdown menus
-	const [submenuOpen, setsubmenuOpen] = useState(false);
-	const [submenuOpenlv2, setsubmenuOpenlv2] = useState(false);
+	const [submenuOpen, setsubmenuOpen] = useState({});
+	const [submenuOpenlv2, setsubmenuOpenlv2] = useState({});
 
 	return (
 		<aside className=" h-screen w-64 z-[1] absolute bg-[#fdf6f1]/80">
@@ -36,7 +36,12 @@ const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
 								{/* // Add the submenuOpen state to the div element */}
 								<div
 									className="flex flex-row justify-between w-full"
-									onClick={() => setsubmenuOpen(!submenuOpen)} // Toggle the submenuOpen state*/}
+									onClick={() =>
+										setsubmenuOpen({
+											...submenuOpen,
+											[index]: !submenuOpen[index],
+										})
+									} // Toggle the submenuOpen state*/}
 								>
 									<div>
 										<span className="text-base font-medum flex-1 ">
@@ -46,25 +51,33 @@ const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
 									<div className="flex flex-1 items-center justify-evenly ">
 										{menu.submenu && (
 											<BsChevronDown
-												className={`  ${submenuOpen && "rotate-180"}`}
-												onClick={() => {
-													setsubmenuOpen(!submenuOpen);
-												}}
+												className={`  ${submenuOpen[index] && "rotate-180"}`}
+												onClick={() =>
+													setsubmenuOpen({
+														...submenuOpen,
+														[index]: !submenuOpen[index],
+													})
+												}
 											/>
 										)}
 									</div>
 								</div>
 							</li>
-							{menu.submenu && submenuOpen && (
+							{menu.submenu && submenuOpen[index] && (
 								<ul className="">
 									{menu.submenuItems.map((submenuItems, index) => (
 										<li
 											key={index}
-											className="text-gray-800 text-sm flex items-center gap-x-4 cursor-pointer p-2 px-10 hover:bg-light-white mt-2 border-b-[1px] border-slate-600 "
-											onClick={() => setsubmenuOpenlv2(!submenuOpenlv2)}
+											className="text-gray-800 text-sm flex items-center cursor-pointer p-2 px-10 hover:bg-light-white mt-2 border-b-[1px] border-slate-600 "
+											onClick={() =>
+												setsubmenuOpenlv2({
+													...submenuOpenlv2,
+													[index]: !submenuOpenlv2[index],
+												})
+											}
 										>
 											<div>
-												<span className="text-base font-medum flex-1 ">
+												<span className="">
 													<Link href={submenuItems.href}>
 														{submenuItems.title}
 													</Link>
@@ -73,35 +86,34 @@ const LeftNavbar = ({ menu }: { menu: Menus[] }) => {
 											<div className="flex flex-1 items-center justify-evenly ">
 												{submenuItems.submenu && (
 													<BsChevronDown
-														className={`  ${submenuOpenlv2 && "rotate-180"}`}
+														className={`  ${
+															submenuOpenlv2[index] && "rotate-180"
+														}`}
 													/>
 												)}
 											</div>
 											{/* Conditionally render the sub-submenu items */}
-											<div className="grid grid-flow-col">
-												{submenuItems.submenuItemslv2 && submenuOpenlv2 && (
-													<ul className="flex-col text-gray-800 text-sm flex items-center gap-x-4 cursor-pointer p-2 px-10 hover:bg-light-white rounded-md mt-2">
+
+											{submenuItems.submenuItemslv2 &&
+												submenuOpenlv2[index] && (
+													<ul className="">
 														{submenuItems.submenuItemslv2.map(
 															(submenuItemslv2, index) => (
 																<li
 																	key={index}
-																	className={`text-gray-800 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white  mt-2 border-b-[1px] border-slate-600 ${
-																		menu.spacing ? "mt-9" : "mt-2"
+																	className={`border-b-[1px] border-slate-600 
 																	} `}
 																>
-																	<div className="">
-																		<span className="text-base font-medum flex-1">
-																			<Link href={submenuItemslv2.href}>
-																				{submenuItemslv2.title}
-																			</Link>
-																		</span>
-																	</div>
+																	<span className="text-base font-medium flex-1 ">
+																		<Link href={submenuItemslv2.href}>
+																			{submenuItemslv2.title}
+																		</Link>
+																	</span>
 																</li>
 															)
 														)}
 													</ul>
 												)}
-											</div>
 										</li>
 									))}
 								</ul>

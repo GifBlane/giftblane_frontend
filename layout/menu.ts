@@ -53,6 +53,7 @@ interface Menus {
       { id:21, title: 'Pines', href: '#',
       submenu: true,
       submenulv2: false,
+      spacing:true,
       submenuItemslv2: [
         { id:212, title: 'Crear Pines', href: '#' },
         { id:213, title: 'Listar Pines', href: '#' },

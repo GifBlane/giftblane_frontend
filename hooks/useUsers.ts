@@ -29,6 +29,7 @@ export const useUsers = ({ baseUrl, pagination }: useUsers) => {
     }
   }
 
+
   useEffect(() => {
     setIsLoading(true);
     axios(`${baseUrl}?${params.toString()}`)

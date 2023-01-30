@@ -5,7 +5,6 @@ import Router from "next/router";
 import React, { useState, useRef } from "react";
 import "reactjs-popup/dist/index.css";
 import { Waves } from "../components/svg/Waves";
-import { useRouter } from "next/router";
 import Image from "next/image";
 
 const Login: NextPage = () => {
@@ -28,7 +27,7 @@ const Login: NextPage = () => {
 		try {
 			// Enviar una solicitud a la ruta de inicio de sesión en el backend
 			const response = await axios.post(
-				"http://34.148.248.36:3002/auth/login",
+				process.env.NEXT_PUBLIC_HOST + "/auth/login",
 				{
 					email: credentials.email,
 					password: credentials.password,
@@ -46,7 +45,6 @@ const Login: NextPage = () => {
 					},
 				},
 			} = response;
-			console.log(name, lastName, typeId, token);
 			Router.push({
 				pathname: "/dashboard",
 				query: { name, lastName, typeId, token },
