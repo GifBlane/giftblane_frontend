@@ -1,7 +1,7 @@
 import Head from "next/head";
-import LeftNavbar from "../components/LeftNavbar";
-import MainContent from "../components/Maincontent";
-import { Waves } from "../components/svg/Waves";
+import LeftNavbar from "components/LeftNavbar";
+import MainContent from "components/Maincontent";
+import { Waves } from "components/svg/Waves";
 
 interface Menus {
 	id: number;

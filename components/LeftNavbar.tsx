@@ -1,9 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
-import cn from "classnames";
-import { Menus } from "../layout/menu";
-import { CSSProperties } from "react";
-
+import { Menus } from "layout/menu";
 import { BsChevronDown } from "react-icons/bs";
 
 const LeftNavbar = ({ menu }: { menu: Menus[] }) => {

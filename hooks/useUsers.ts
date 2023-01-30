@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IUser } from "../models/usersData";
+import { IUser } from "models/usersData";
 import axios from "axios";
 
 interface useUsers {

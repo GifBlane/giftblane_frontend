@@ -1,7 +1,7 @@
 import { NextPage } from "next";
-import Layout from "../layout/Layout";
-import { menu } from "../layout/menu";
-import { useUsers } from "../hooks";
+import Layout from "layout/Layout";
+import { menu } from "layout/menu";
+import { useUsers } from "hooks";
 
 const TablePage: NextPage = () => {
 	const { users } = useUsers({

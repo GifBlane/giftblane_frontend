@@ -4,7 +4,7 @@ import Head from "next/head";
 import Router from "next/router";
 import React, { useState, useRef } from "react";
 import "reactjs-popup/dist/index.css";
-import { Waves } from "../components/svg/Waves";
+import { Waves } from "components/svg/Waves";
 import Image from "next/image";
 
 const Login: NextPage = () => {
